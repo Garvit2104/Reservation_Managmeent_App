@@ -23,7 +23,7 @@ public partial class Reservation
 
     public string? ConfirmationId { get; set; }
 
-    public string? Remarks { get; set; }
+    public string Remarks { get; set; } = null!;
 
     public virtual ICollection<ReservationDoc> ReservationDocs { get; set; } = new List<ReservationDoc>();
 

@@ -4,14 +4,14 @@ namespace Reservation_Managmeent_App.ClientMicroServices.Client_TP
 {
     public class Client_TP_Service: IClient_TP_Service
     {
-        private readonly HttpClient _httpClinet;
-        public Client_TP_Service(HttpClient _httpClinet)
+        private readonly HttpClient _tphttpClient;
+        public Client_TP_Service(IHttpClientFactory httpClientFactory)
         {
-            this._httpClinet = _httpClinet;
+            this._tphttpClient = httpClientFactory.CreateClient("TravelPlanner");
         }
-        public async Task<TravelResponseDTO> GetTravelRequestById(int id)
+        public async Task<TravelResponseDTO> GetTravelRequestById(int trid)
         {
-            var response = await _httpClinet.GetAsync($"/api/TravelRequests/{id}");
+            var response = await _tphttpClient.GetAsync($"/api/TravelRequests/travelrequests/{trid}");
             if (!response.IsSuccessStatusCode)
                 return null;
 
@@ -20,5 +20,18 @@ namespace Reservation_Managmeent_App.ClientMicroServices.Client_TP
 
             return travelRequest;
         }
+
+        public async Task<int> CalculateBudget(int travelRequestId)
+        {
+            var response = await _tphttpClient.GetAsync($"/api/GradesClientAPI/calculatebudget/{travelRequestId}");
+            response.EnsureSuccessStatusCode(); // throws if not 2xx
+
+            var content = await response.Content.ReadAsStringAsync();
+            if (int.TryParse(content, out var budget))
+                return budget;
+
+            throw new FormatException($"Budget API returned non-integer content: {content}");
+        }
+
     }
 }

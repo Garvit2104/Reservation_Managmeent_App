@@ -5,6 +5,12 @@ namespace Reservation_Managmeent_App.BLL.Reservations
 {
     public interface IReservationService
     {
-        public ReservationResponseDTO AddReservation(ReservationRequestDTO createReservation);
+        Task<ReservationResponseDTO> AddReservation(ReservationRequestDTO addReservationRecord);
+
+        public List<ReservationResponseDTO> GetReservationByTravelRequestId(int trid);
+
+        public ReservationResponseDTO GetTrackReservationByTrid(int trid);
+
+        public ReservationResponseDTO GetReservationDetails(int reservationId);
     }
 }

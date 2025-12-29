@@ -16,7 +16,7 @@ namespace Reservation_Managmeent_App.Controllers
             this._clinet_TP_Service = _clinet_TP_Service;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("travelrequests{trid}")]
         public async Task<TravelResponseDTO> GetTravelRequestById(int id)
         {
             var result = await _clinet_TP_Service.GetTravelRequestById(id);

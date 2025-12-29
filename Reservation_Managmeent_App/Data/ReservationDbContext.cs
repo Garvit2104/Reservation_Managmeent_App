@@ -24,13 +24,13 @@ public partial class ReservationDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=localhost;Database=Reservations_DB;Trusted_Connection=True;TrustServerCertificate=True;");
+        => optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=Reservations_DB;Trusted_Connection=True;TrustServerCertificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Reservation>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Reservat__3213E83F18ABF896");
+            entity.HasKey(e => e.Id).HasName("PK__Reservat__3213E83F6DAB55E1");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Amount).HasColumnName("amount");
@@ -56,12 +56,12 @@ public partial class ReservationDbContext : DbContext
 
             entity.HasOne(d => d.ReservationType).WithMany(p => p.Reservations)
                 .HasForeignKey(d => d.ReservationTypeId)
-                .HasConstraintName("FK__Reservati__reser__4CA06362");
+                .HasConstraintName("FK__Reservati__reser__38996AB5");
         });
 
         modelBuilder.Entity<ReservationDoc>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Reservat__3213E83F0E0CCB84");
+            entity.HasKey(e => e.Id).HasName("PK__Reservat__3213E83FB719C30D");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.DocumentUrl)
@@ -72,12 +72,12 @@ public partial class ReservationDbContext : DbContext
 
             entity.HasOne(d => d.Reservation).WithMany(p => p.ReservationDocs)
                 .HasForeignKey(d => d.ReservationId)
-                .HasConstraintName("FK__Reservati__reser__5165187F");
+                .HasConstraintName("FK__Reservati__reser__3D5E1FD2");
         });
 
         modelBuilder.Entity<ReservationType>(entity =>
         {
-            entity.HasKey(e => e.TypeId).HasName("PK__Reservat__2C0005988FDA1CBD");
+            entity.HasKey(e => e.TypeId).HasName("PK__Reservat__2C000598D7A0FE9E");
 
             entity.Property(e => e.TypeId).HasColumnName("type_id");
             entity.Property(e => e.TypeName)

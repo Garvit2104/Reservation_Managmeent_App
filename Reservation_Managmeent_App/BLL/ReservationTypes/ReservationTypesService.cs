@@ -27,5 +27,18 @@ namespace Reservation_Managmeent_App.BLL.ReservationTypes
             }
             return ls;
         }
+
+        public List<ReservationTypeResponseDTO> GetReservationTypeName()
+        {
+            List<ReservationTypeResponseDTO> reservationTypes = GetReservationType();
+
+            foreach(var item in reservationTypes)
+            {
+                ReservationTypeResponseDTO reservationTypeName = new ReservationTypeResponseDTO();
+                reservationTypeName.TypeName = item.TypeName;
+                reservationTypes.Add(reservationTypeName);
+            }
+            return reservationTypes;
+        }
     }
 }
