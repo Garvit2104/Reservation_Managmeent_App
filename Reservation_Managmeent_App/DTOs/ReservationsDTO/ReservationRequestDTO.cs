@@ -21,5 +21,7 @@
 
         public string? Remarks { get; set; }
 
+        public IFormFile File { get; set; }
+
     }
 }

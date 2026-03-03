@@ -10,6 +10,6 @@ namespace Reservation_Managmeent_App.DTOs.ReservationDocs
 
         public string? DocumentUrl { get; set; }
 
-        public virtual Reservation? Reservation { get; set; }
+        
     }
 }

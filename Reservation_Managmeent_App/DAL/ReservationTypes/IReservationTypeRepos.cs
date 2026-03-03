@@ -4,6 +4,6 @@ namespace Reservation_Managmeent_App.DAL.ReservationTypes
 {
     public interface IReservationTypeRepos
     {
-        public List<ReservationType> GetReservationTypes();
+        Task<List<ReservationType>> GetReservationTypes();
     }
 }

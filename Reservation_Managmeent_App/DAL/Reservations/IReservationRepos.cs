@@ -4,15 +4,15 @@ namespace Reservation_Managmeent_App.DAL.Reservations
 {
     public interface IReservationRepos
     {
-        public Reservation AddReservations(Reservation reservation);
+        public Task<Reservation> AddReservations(Reservation reservation);
 
-        public Reservation GetReservationByTravelRequestId(int travelRequestId);
+        public Task<List<Reservation>> GetReservationByTravelRequestId(int travelRequestId);
 
-        public int CountReservationsByTravelRequestId(int travelRequestId);
+        public Task<int> CountReservationsByTravelRequestId(int travelRequestId);
 
 
-        public bool ExistsReservationOfAnyType(int travelRequestId, params int[] typeIds);
+        public Task<bool> ExistsReservationOfAnyType(int travelRequestId, params int[] typeIds);
 
-        public Reservation GetReservationDetails(int reservationId);
+        public Task<Reservation> GetReservationDetails(int reservationId);
     }
 }

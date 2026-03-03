@@ -33,14 +33,19 @@ namespace Reservation_Managmeent_App.BLL.ReservationDocs
             if (file.Length > 1024 * 1024)
                 throw new DocumentSizeLimitExceededException("File size exceed 1 MB");
 
-            // File Name -> fileName.pdf
+           
+            string originalName = Path.GetFileName(file.FileName);
+            string fileName = $"Reservation_{reservationId}_{originalName}";
+;            
 
-            string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "ReservationDocs");
+            // ── Save to disk ──
+            string uploadsFolder = Path.Combine(
+                Directory.GetCurrentDirectory(), "ReservationDocs");
 
             if (!Directory.Exists(uploadsFolder))
                 Directory.CreateDirectory(uploadsFolder);
 
-            string filePath = Path.Combine(uploadsFolder, "FileName.pdf");
+            string filePath = Path.Combine(uploadsFolder, fileName);
 
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
@@ -51,7 +56,7 @@ namespace Reservation_Managmeent_App.BLL.ReservationDocs
             var uploadesDocsEntity = new ReservationDoc
             {
                 ReservationId = reservationId,
-                DocumentUrl = "FileName.pdf"
+                DocumentUrl = fileName
             };
 
             await _reservationDocRepo.AddReservatonDocs(uploadesDocsEntity);
@@ -65,8 +70,8 @@ namespace Reservation_Managmeent_App.BLL.ReservationDocs
             if (docMeta == null)
                 return null;
 
-            string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "ReservtionDocs");
-            string filePath = Path.Combine(uploadsFolder, "FileName.pdf");
+            string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "ReservationDocs");
+            string filePath = Path.Combine(uploadsFolder, docMeta.DocumentUrl);
 
             if (!System.IO.File.Exists(filePath)) 
                 return null; 

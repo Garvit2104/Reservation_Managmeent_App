@@ -5,7 +5,7 @@ using Reservation_Managmeent_App.DTOs.ReservationTypes_DTO;
 
 namespace Reservation_Managmeent_App.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/reservations")]
     [ApiController]
     public class ReservationTypeController : ControllerBase
     {
@@ -16,12 +16,12 @@ namespace Reservation_Managmeent_App.Controllers
             this._reservationTypeService = _reservationTypeService;
         }
 
-        [HttpGet("reservations/types")]
+        [HttpGet("types")]
 
-        public List<ReservationTypeResponseDTO> GetReservationType()
+        public async Task<IActionResult> GetReservationType()
         {
-            var result = _reservationTypeService.GetReservationType();
-            return result;
+            var result = await _reservationTypeService.GetReservationTypes();
+            return Ok(result);
         }
     }
 }

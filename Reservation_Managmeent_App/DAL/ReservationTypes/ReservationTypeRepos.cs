@@ -1,4 +1,5 @@
-﻿using Reservation_Managmeent_App.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Reservation_Managmeent_App.Data;
 using Reservation_Managmeent_App.Models;
 
 namespace Reservation_Managmeent_App.DAL.ReservationTypes
@@ -12,9 +13,13 @@ namespace Reservation_Managmeent_App.DAL.ReservationTypes
             this._context = _context;
         }
 
-        public List<ReservationType> GetReservationTypes()
+        public async Task<List<ReservationType>> GetReservationTypes()
         {
-            var data =  _context.ReservationTypes.ToList();
+            // ✅ ToListAsync() is the async version of ToList()
+            // await means: "wait for database to respond, but don't block the thread"
+            // WITHOUT await: thread is frozen until DB responds
+            // WITH await:    thread goes off to handle other requests, comes back when DB is done
+            var data = await _context.ReservationTypes.ToListAsync();
             return data;
         }
     }

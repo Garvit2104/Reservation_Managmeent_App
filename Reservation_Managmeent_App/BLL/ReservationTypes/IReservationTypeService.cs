@@ -4,6 +4,6 @@ namespace Reservation_Managmeent_App.BLL.ReservationTypes
 {
     public interface IReservationTypeService
     {
-        public List<ReservationTypeResponseDTO> GetReservationType();
+        Task<List<ReservationTypeResponseDTO>> GetReservationTypes();
     }
 }

@@ -11,9 +11,9 @@ namespace Reservation_Managmeent_App.BLL.ReservationTypes
         {
             this._reservationTypeRepos = _reservationTypeRepos;
         }
-        public List<ReservationTypeResponseDTO> GetReservationType()
+        public async Task<List<ReservationTypeResponseDTO>> GetReservationTypes()
         {
-            var resTypes = _reservationTypeRepos.GetReservationTypes();
+            var resTypes = await _reservationTypeRepos.GetReservationTypes();
 
             List<ReservationTypeResponseDTO> ls = new List<ReservationTypeResponseDTO>();
 
@@ -28,17 +28,5 @@ namespace Reservation_Managmeent_App.BLL.ReservationTypes
             return ls;
         }
 
-        public List<ReservationTypeResponseDTO> GetReservationTypeName()
-        {
-            List<ReservationTypeResponseDTO> reservationTypes = GetReservationType();
-
-            foreach(var item in reservationTypes)
-            {
-                ReservationTypeResponseDTO reservationTypeName = new ReservationTypeResponseDTO();
-                reservationTypeName.TypeName = item.TypeName;
-                reservationTypes.Add(reservationTypeName);
-            }
-            return reservationTypes;
-        }
     }
 }

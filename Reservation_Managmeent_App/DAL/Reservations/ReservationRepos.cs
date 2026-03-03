@@ -12,37 +12,39 @@ namespace Reservation_Managmeent_App.DAL.Reservations
             this._context = _context;
         }
 
-        public Reservation AddReservations(Reservation reservation)
+        public async Task<Reservation> AddReservations(Reservation reservation)
         {
-            var addedReservation = _context.Reservations.Add(reservation).Entity;
-            _context.SaveChanges();
-            return addedReservation;
+            var addedReservation = await _context.Reservations.AddAsync(reservation);
+            await _context.SaveChangesAsync();
+            return addedReservation.Entity;
         }
 
-        public Reservation GetReservationByTravelRequestId(int travelRequestId)
+        public async Task<List<Reservation>> GetReservationByTravelRequestId(int travelRequestId)
         {
-            return  _context.Reservations.AsNoTracking().FirstOrDefault(r=>r.TravelRequestId == travelRequestId);
+            return  await _context.Reservations.AsNoTracking().Where(r=>r.TravelRequestId == travelRequestId).ToListAsync();
             
         }
 
 
-        public int CountReservationsByTravelRequestId(int travelRequestId)
+        public async Task<int> CountReservationsByTravelRequestId(int travelRequestId)
         {
-            return _context.Reservations.AsNoTracking().Count(r => r.TravelRequestId == travelRequestId);
+            return await _context.Reservations
+                .AsNoTracking()
+                .CountAsync(r => r.TravelRequestId == travelRequestId);
         }
 
-        public bool ExistsReservationOfAnyType(int travelRequestId, params int[] typeIds)
+        public async Task<bool> ExistsReservationOfAnyType(int travelRequestId, params int[] typeIds)
         {
-            return _context.Reservations
+            return await _context.Reservations
                            .AsNoTracking()
-                           .Any(r => r.TravelRequestId == travelRequestId
+                           .AnyAsync(r => r.TravelRequestId == travelRequestId
                                   && r.ReservationTypeId.HasValue
                                   && typeIds.Contains(r.ReservationTypeId.Value));
         }
 
-        public Reservation GetReservationDetails(int reservationId)
+        public async Task<Reservation> GetReservationDetails(int reservationId)
         {
-            return _context.Reservations.AsNoTracking().FirstOrDefault(rid => rid.ReservationDoneByEmployeeId == reservationId);
+            return await _context.Reservations.AsNoTracking().FirstOrDefaultAsync(rid => rid.ReservationDoneByEmployeeId == reservationId);
         }
 
     }
